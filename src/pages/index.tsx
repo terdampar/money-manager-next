@@ -4,7 +4,6 @@ import axios from "axios";
 import Head from "next/head";
 import { convertDateFull } from "../library/convertDate";
 import Header from "../components/Header";
-import { getSession, GetSessionParams } from "next-auth/react";
 import { config } from "../server/config";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as Icon from "../components/icons";
@@ -126,7 +125,7 @@ export default function Home() {
             className='max-w-2xl'
           >
             <form autoComplete="off" onSubmit={(e) => submitCreateJournal(e)}>
-              <div className='p-4 space-y-4 w-96'>
+              <div className='p-4 space-y-4'>
                 <div>
                   <p>Name</p>
                   <input required autoComplete="off" className='w-full focus:outline-none p-2 max-w-screen-2xl border border-gray-300 rounded-sm bg-white' type="text" onChange={(e) => setName(e.target.value)} value={name} placeholder='e.g. Ice Cream' />
@@ -206,21 +205,4 @@ function JournalItem(props: { space: HomeProps, add: () => void, delete: () => v
       </ul>
     </details>
   )
-}
-
-export async function getServerSideProps(context: GetSessionParams | undefined) {
-  const session = await getSession(context)
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/profile',
-        permanent: false,
-      },
-    }
-  }
-  return {
-    props: {
-      // data: data
-    }
-  }
 }
